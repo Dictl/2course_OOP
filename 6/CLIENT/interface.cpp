@@ -239,6 +239,7 @@ void MainWindow::on_pushButton_clicked()
         req_ss << "7";
     }
     qDebug() << QString::fromStdString(req_ss.str());
+    if (req_ss.str() == "0 " || req_ss.str() == "1 ") return;
     comm->sendToAddress(QString::fromStdString(req_ss.str()), QHostAddress("127.0.0.1"), 1984);
 
 

@@ -5,11 +5,11 @@ Server::Server(int argc, char *argv[]) : QCoreApplication(argc, argv){
     connect(comm, &Communicator::messageRecieved, this, &Server::handleMessage);
     this->poly_complex=new Polynom<TComplex>(3);
     this->poly_double=new Polynom<double>(3);
-    std::stringstream fp;
+    std::stringstream fp, fp2;
     fp << "1+0i 2+0i 3+0i 4+0i";
     fp >> *poly_complex;
-    fp << "4 5 6 7";
-    fp >> *poly_double;
+    fp2 << "4 5 6 7";
+    fp2 >> *poly_double;
     qDebug() << "start";
 }
 Server::~Server(){
@@ -31,7 +31,7 @@ void Server::handleMessage(QString &message){
     case 1:{
     int new_poly_size;
     qDebug() << "1:New polynomial creation request.";
-    if (rReqSs >> new_poly_size || !rReqSs.fail()){
+    if (rReqSs >> new_poly_size && !rReqSs.fail()){
         qDebug() << "Size:" << new_poly_size;
         if (new_poly_size <= 0) {
             comm->sendToAddress("0", addressee, addresseePort); //if it's a zero polynomial
@@ -42,14 +42,15 @@ void Server::handleMessage(QString &message){
         int root_counter = 0;
         check.str(rReqSs.str());     // <==== a copy of rReqSs to check roots. BUT!
         std::string *dummy = new std::string; // rReqSs has a menu number and a number of roots
-        check >> *dummy;           // in first two iterations. So we extract the first
-        check >> *dummy;          // two in dummy and get rid of it.
-        delete dummy;            // This way, we get an ss of roots ONLY. Profit!
+        check >> *dummy;            // in first two iterations. So we extract the first
+        check >> *dummy;           // two in dummy and get rid of it.
+        check >> *dummy;          // This way, we get an ss of roots ONLY. Profit!
+        delete dummy;
         while (!check.eof()){
-            if (check >> current_root || !check.fail()){
+            if (check >> current_root && !check.fail()){
                 root_counter++;
                 if (is_complex_from_string(current_root) && !use_complex_polynom){
-                    comm->sendToAddress("Requested polynomial of type double, but a complex root has been provided. Operation aborted.", addressee, addresseePort);
+                    comm->sendToAddress("Expected double value , got complex instead. Operation aborted.", addressee, addresseePort);
                     qDebug() << "Requested: operation with <double>. Recieved: <TComplex>"
                              << message;
                     return;
@@ -100,7 +101,7 @@ void Server::handleMessage(QString &message){
         qDebug() << "2:Polynomial resize request.";
         int new_roots_size = 0;
         if(use_complex_polynom){
-            if(rReqSs >> new_roots_size || !rReqSs.fail()){
+            if(rReqSs >> new_roots_size && !rReqSs.fail()){
                 poly_complex->resize(new_roots_size);
                 comm->sendToAddress("The array of roots has been successfully resized", addressee, addresseePort);
                 qDebug() << "The array of roots has been successfully resized";
@@ -115,7 +116,7 @@ void Server::handleMessage(QString &message){
             break;
         }
         else {
-            if(rReqSs >> new_roots_size || !rReqSs.fail()){
+            if(rReqSs >> new_roots_size && !rReqSs.fail()){
                 poly_double->resize(new_roots_size);
                 comm->sendToAddress("The array of roots has been successfully resized", addressee, addresseePort);
                 qDebug() << "The array of roots has been successfully resized";
@@ -137,14 +138,15 @@ void Server::handleMessage(QString &message){
         double x_double;
         TComplex x_complex;
         rReqSs >> current_x;
+        rReqSs.str(std::string());
+        rReqSs.clear();
         if (is_complex_from_string(current_x) && !use_complex_polynom){
-            comm->sendToAddress("Requested polynomial of type double, but a complex x has been provided. Operation aborted.", addressee, addresseePort);
+            comm->sendToAddress("Expected double value, got complex instead. Operation aborted.", addressee, addresseePort);
             return;
         }
-        else if (is_complex_from_string(current_x) && use_complex_polynom){
+        else if (use_complex_polynom){
             rReqSs << current_x;
-            rReqSs >> x_complex;
-            if(rReqSs >> x_complex || !rReqSs.fail()){
+            if(rReqSs >> x_complex && !rReqSs.fail()){
                 resSs << poly_complex->solve_for_x(x_complex);
                 comm->sendToAddress(QString::fromStdString(resSs.str()), addressee, addresseePort);
                 qDebug() << "Result in x has been successfully sent.";
@@ -159,8 +161,8 @@ void Server::handleMessage(QString &message){
             }
         }
         else {
-            rReqSs >> x_double;
-            if(rReqSs >> x_double || !rReqSs.fail()){
+            rReqSs << current_x;
+            if(rReqSs >> x_double && !rReqSs.fail()){
                 resSs << poly_double->solve_for_x(x_double);
                 comm->sendToAddress(QString::fromStdString(resSs.str()), addressee, addresseePort);
                 qDebug() << "Result in x has been successfully sent.";
@@ -183,14 +185,15 @@ void Server::handleMessage(QString &message){
         double new_a_n_double;
         TComplex new_a_n_complex;
         rReqSs >> current_a_n;
+        rReqSs.str(std::string());
+        rReqSs.clear();
         if (is_complex_from_string(current_a_n) && !use_complex_polynom){
-            comm->sendToAddress("Requested polynomial of type double, but a complex a_n has been provided. Operation aborted.", addressee, addresseePort);
+            comm->sendToAddress("Expected double value, got complex instead. Operation aborted.", addressee, addresseePort);
             return;
         }
-        else if (is_complex_from_string(current_a_n) && use_complex_polynom){
+        else if (use_complex_polynom){
             rReqSs << current_a_n;
-            rReqSs >> new_a_n_complex;
-            if(rReqSs >> new_a_n_complex || !rReqSs.fail()){
+            if(rReqSs >> new_a_n_complex && !rReqSs.fail()){
                 poly_complex->set_a_n(new_a_n_complex);
                 resSs << new_a_n_complex;
                 comm->sendToAddress("Coefficient A_n has been changed to: " + QString::fromStdString(resSs.str()), addressee, addresseePort);
@@ -206,8 +209,7 @@ void Server::handleMessage(QString &message){
         }
         else {
             rReqSs << current_a_n;
-            rReqSs >> new_a_n_double;
-            if(rReqSs >> new_a_n_double || !rReqSs.fail()){
+            if(rReqSs >> new_a_n_double && !rReqSs.fail()){
                 poly_double->set_a_n(new_a_n_double);
                 resSs << new_a_n_double;
                 comm->sendToAddress("Coefficient A_n has been changed to: " + QString::fromStdString(resSs.str()), addressee, addresseePort);
@@ -230,14 +232,21 @@ void Server::handleMessage(QString &message){
         std::string current_root;
         double new_root_double;
         TComplex new_root_complex;
+        rReqSs >> index;
         rReqSs >> current_root;
+        rReqSs.str(std::string());
+        rReqSs.clear();
         if (is_complex_from_string(current_root) && !use_complex_polynom){
-            comm->sendToAddress("Requested polynomial of type double, but a complex root has been provided. Operation aborted.", addressee, addresseePort);
+            comm->sendToAddress("Expected double value, got complex instead. Operation aborted.", addressee, addresseePort);
             return;
         }
-        else if (is_complex_from_string(current_root) && use_complex_polynom) {
-            if(rReqSs >> index || !rReqSs.fail()) {
-                if(rReqSs >> new_root_complex || !rReqSs.fail()){
+        else if (use_complex_polynom) {
+            rReqSs << index;
+            rReqSs << " ";
+            rReqSs << current_root;
+            qDebug() << rReqSs.str();
+            if(rReqSs >> index && !rReqSs.fail()) {
+                if(rReqSs >> new_root_complex && !rReqSs.fail()){
                     poly_complex->change_root(index,new_root_complex);
                     comm->sendToAddress("Root has been changed succesfully!", addressee, addresseePort);
                     qDebug() << "Root has been changed succesfully.";
@@ -258,8 +267,11 @@ void Server::handleMessage(QString &message){
             }
         }
         else {
-            if(rReqSs >> index || !rReqSs.fail()) {
-                if(rReqSs >> new_root_double || !rReqSs.fail()){
+            rReqSs << index;
+            rReqSs << " ";
+            rReqSs << current_root;
+            if(rReqSs >> index && !rReqSs.fail()) {
+                if(rReqSs >> new_root_double && !rReqSs.fail()){
                     poly_double->change_root(index,new_root_double);
                     comm->sendToAddress("Root has been changed succesfully!", addressee, addresseePort);
                     qDebug() << "Root has been changed succesfully.";

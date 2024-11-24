@@ -31,17 +31,13 @@ std::istream& operator>>(std::istream& stream, Polynom<number>& polynom) {
 }
 template <typename number>
 std::ostream& operator<<(std::ostream& stream, const Polynom<number>& polynom) {
-    char op_brace;
-    char en_brace;
     if (polynom.size == 0)
     {
         stream << polynom.a_n;
         return stream;
     }
     if (!polynom.expanded){
-        polynom.a_n == 0 ? stream << "\0" : stream << "(";
         stream<<polynom.a_n;
-        polynom.a_n == 0 ? stream << "\0" : stream << ")";
         stream<<"(";
 
         for(size_t i = 0; i < polynom.size; i++)
@@ -57,24 +53,15 @@ std::ostream& operator<<(std::ostream& stream, const Polynom<number>& polynom) {
             {
                 continue;
             }
-            if ((polynom.coefficients->get_numbers()[i]*polynom.a_n) == 0){
-                op_brace = '\0';
-                en_brace = '\0';
-            }
-            else
-            {
-                op_brace = '(';
-                en_brace = ')';
-            }
             if (polynom.size-i!=1 && (polynom.a_n*polynom.coefficients->get_numbers()[i] != 1)){
                 if ((polynom.a_n*polynom.coefficients->get_numbers()[i]) < 0){
-                    stream << "-" << op_brace << polynom.a_n*polynom.coefficients->get_numbers()[i]*-1 << en_brace << "x^" << (int) polynom.size-i;
+                    stream << "-" << polynom.a_n*polynom.coefficients->get_numbers()[i]*-1 << "x^" << (int) polynom.size-i;
                 }
                 else{
                     if (i==0){
-                        stream << op_brace << polynom.a_n*polynom.coefficients->get_numbers()[i] << en_brace << "x^" << (int) polynom.size-i;
+                        stream << polynom.a_n*polynom.coefficients->get_numbers()[i] << "x^" << (int) polynom.size-i;
                     }
-                    else stream << "+" << op_brace << polynom.a_n*polynom.coefficients->get_numbers()[i] << en_brace << "x^" << (int) polynom.size-i;
+                    else stream << "+" << polynom.a_n*polynom.coefficients->get_numbers()[i] << "x^" << (int) polynom.size-i;
                 }
             }
             else if (polynom.a_n*polynom.coefficients->get_numbers()[i] == 1 && polynom.size-i!=1) {
@@ -90,13 +77,13 @@ std::ostream& operator<<(std::ostream& stream, const Polynom<number>& polynom) {
             }
             else if (polynom.a_n*polynom.coefficients->get_numbers()[i] != 1) {
                 if ((polynom.a_n*polynom.coefficients->get_numbers()[i]) < 0){
-                    stream << "-" << op_brace << polynom.a_n*polynom.coefficients->get_numbers()[i]*-1 << en_brace << "x";
+                    stream << "-" << polynom.a_n*polynom.coefficients->get_numbers()[i]*-1 << "x";
                 }
                 else{
                     if (i == 0){
-                        stream << op_brace << polynom.a_n*polynom.coefficients->get_numbers()[i] << en_brace << "x";
+                        stream << polynom.a_n*polynom.coefficients->get_numbers()[i] << "x";
                     }
-                    else stream << "+" << op_brace << polynom.a_n*polynom.coefficients->get_numbers()[i] << en_brace << "x";
+                    else stream << "+" << polynom.a_n*polynom.coefficients->get_numbers()[i] << "x";
                 }
             }
             else {
@@ -106,20 +93,11 @@ std::ostream& operator<<(std::ostream& stream, const Polynom<number>& polynom) {
                 else stream << "+" << "x";
             }
         }
-        if ((polynom.coefficients->get_numbers()[polynom.size]*polynom.a_n) == 0){
-            op_brace = '\0';
-            en_brace = '\0';
-        }
-        else
-        {
-            op_brace = '(';
-            en_brace = ')';
-        }
         if ((polynom.a_n*polynom.coefficients->get_numbers()[polynom.size]) < 0){
-            stream << "-" << op_brace << polynom.a_n*polynom.coefficients->get_numbers()[polynom.size]*-1<<en_brace<<std::endl;
+            stream << "-" << polynom.a_n*polynom.coefficients->get_numbers()[polynom.size]*-1 << std::endl;
         }
         else{
-            stream << "+" << op_brace << polynom.a_n*polynom.coefficients->get_numbers()[polynom.size]<<en_brace<<std::endl;
+            stream << "+" << polynom.a_n*polynom.coefficients->get_numbers()[polynom.size] << std::endl;
         }
     }
     return stream;
