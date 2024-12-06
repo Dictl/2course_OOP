@@ -1,4 +1,4 @@
-QT -= gui
+zQT -= gui
 QT += core network
 
 CONFIG += c++17 cmdline
@@ -24,6 +24,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     communicator.h \
+    number.h \
     polynom.h \
     server.h \
     tcomplex.h \

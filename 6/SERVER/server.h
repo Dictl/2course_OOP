@@ -13,7 +13,7 @@ public:
     ~Server();
 private:
     Communicator *comm;
-    Polynom<TComplex> *poly_complex;
+    Polynom<number> *poly_complex;
     Polynom<double> *poly_double;
     /*We store it on server, yes. This way, we can make a default polynomial.
      In addition, we have to carry over the amount of the roots polynomial has, in
