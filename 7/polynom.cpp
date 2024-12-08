@@ -11,11 +11,6 @@ Polynom<number>::Polynom(size_t _size) : Polynom() {
     size = _size;
 }
 
-template<typename number>
-Polynom<number>::Polynom(size_t size, number x, int n)
-{
-
-}
 template <typename number>
 Polynom<number>::~Polynom() {
     delete coefficients;
