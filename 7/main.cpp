@@ -1,10 +1,11 @@
-#include <iostream>
-#include "sine.h"
-#include "sineintegral.h"
+#include "mainwindow.h"
+
+#include <QApplication>
 
 int main(int argc, char *argv[])
 {
-    SineIntegral<TComplex> sine(7);
-    std::cout << sine.solve_for_x(1);
-    exit(0);
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }
