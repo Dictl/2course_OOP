@@ -39,10 +39,10 @@ void MainWindow::on_pushButton1_clicked()
 {
     n_abonent=ui->n_abonent_->text();
     limit=ui->limit_connect->text();
+    Server server(limit.toInt(), n_abonent.toInt());
     my_clients = new Clients();
     my_clients->show();
-    this->hide();
-    Server server(limit.toInt(), n_abonent.toInt());
+    connect(my_clients, &Clients::clDestroyed, this, &MainWindow::active);
     ui->n_abonent_->setEnabled(false);
     ui->limit_connect->setEnabled(false);
     ui->pushButton1->setEnabled(false);
