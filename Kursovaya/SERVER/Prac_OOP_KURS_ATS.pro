@@ -7,17 +7,18 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    client.cpp \
         communicator.cpp \
         main.cpp \
         server.cpp\
-        clients.cpp \
         interface.cpp
 
-        number.cpp
+
 
 FORMS += \
-        clients.ui \
+        client.ui \
         interface.ui
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -25,8 +26,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    client.h \
     communicator.h \
-    clients.h \
     server.h\
     interface.h
 

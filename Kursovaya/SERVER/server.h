@@ -1,6 +1,6 @@
 #ifndef SERVER_H
 #define SERVER_H
-#include "qcoreapplication.h"
+#include "QApplication"
 #include <sstream>
 #include <communicator.h>
 #include <bits/stdc++.h>
@@ -8,11 +8,11 @@
 #define NETWORK_IP QHostAddress("127.0.0.1")
 #define NEW_CLIENT_PORT (quint16) 1
 
-class Server : public QCoreApplication
+class Server : public QObject
 {
     Q_OBJECT
 public:
-    Server(int, char**, int k, int n);
+    Server(int k, int n);
     ~Server();
 private:
     int maximumConnections, currentConnections;

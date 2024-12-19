@@ -1,6 +1,6 @@
 #include "server.h"
 
-Server::Server(int argc, char *argv[], int k, int n) : QCoreApplication(argc, argv){
+Server::Server(int k, int n) : QObject(){
     comm = new Communicator(QHostAddress("127.0.0.1"), 1984);
     connect(comm, &Communicator::messageRecieved, this, &Server::handleMessage);
     maximumConnections = pow(2,k);

@@ -1,12 +1,12 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
+#include "server.h"
 #include <QMainWindow>
 #include <QUdpSocket>
 #include <sstream>
 //#include "abonent.h"
-#include "clients.h"
-#include "server.h"
 
+#include "client.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -28,10 +28,9 @@ public slots:
 private slots:
 
     void on_pushButton1_clicked();
-
 private:
     int _argc;
-
+    clients *my_clients;
     Ui::MainWindow *ui;
     QByteArray data;
     char **_argv;

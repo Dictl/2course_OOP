@@ -103,7 +103,6 @@ void Server::handleMessage(QString &message){
             comm->sendToAddress(QString::fromStdString(resSs.str()), NETWORK_IP, sender);
             if (sender == connections[index].first){
                 comm->sendToAddress(QString::fromStdString(resSs.str()), NETWORK_IP, connections[index].second);
-
             }
             else{
                 comm->sendToAddress(QString::fromStdString(resSs.str()), NETWORK_IP, connections[index].first);

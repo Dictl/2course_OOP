@@ -1,4 +1,4 @@
-
+#include "interface.h"
 #include <QApplication>
 #include <iostream>
 
