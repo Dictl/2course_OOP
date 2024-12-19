@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Clients</class>
+ <class>client</class>
  <widget class="QWidget" name="client">
   <property name="geometry">
    <rect>
@@ -23,13 +23,6 @@
    </item>
    <item>
     <widget class="QListView" name="list_clients"/>
-   </item>
-   <item>
-    <widget class="QPushButton" name="pushButton">
-     <property name="text">
-      <string>Запустить</string>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>
