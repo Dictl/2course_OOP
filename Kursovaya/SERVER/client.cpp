@@ -1,22 +1,22 @@
 #include "client.h"
 #include "ui_client.h"
 
-clients::clients(QWidget *parent)
+Clients::Clients(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::clients)
+    , ui(new Ui::Clients)
 {
     ui->setupUi(this);
 }
 
-clients::~clients()
+Clients::~Clients()
 {
     delete ui;
 }
-void clients::closeEvent(QCloseEvent *event){
+void Clients::closeEvent(QCloseEvent *event){
     emit clDestroyed();
     event->accept();
 }
-void clients::on_pushButton_clicked()
+void Clients::on_pushButton_clicked()
 {
 
     /*client *my_client = new client(nullptr);

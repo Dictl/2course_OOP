@@ -3,16 +3,16 @@
 #include <QCloseEvent>
 #include <QWidget>
 namespace Ui {
-class clients;
+class Clients;
 }
 
-class clients : public QWidget
+class Clients : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit clients(QWidget *parent = nullptr);
-    ~clients();
+    explicit Clients(QWidget *parent = nullptr);
+    ~Clients();
 
 private slots:
     void on_pushButton_clicked();
@@ -24,7 +24,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private:
-    Ui::clients *ui;
+    Ui::Clients *ui;
 };
 
 #endif // CLIENT_H

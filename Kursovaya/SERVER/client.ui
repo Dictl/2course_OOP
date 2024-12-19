@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>clients</class>
+ <class>Clients</class>
  <widget class="QWidget" name="client">
   <property name="geometry">
    <rect>

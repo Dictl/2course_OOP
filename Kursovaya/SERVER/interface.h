@@ -30,7 +30,7 @@ private slots:
     void on_pushButton1_clicked();
 private:
     int _argc;
-    clients *my_clients;
+    Clients *my_clients;
     Ui::MainWindow *ui;
     QByteArray data;
     char **_argv;

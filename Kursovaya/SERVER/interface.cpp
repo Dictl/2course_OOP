@@ -39,7 +39,7 @@ void MainWindow::on_pushButton1_clicked()
 {
     n_abonent=ui->n_abonent_->text();
     limit=ui->limit_connect->text();
-    my_clients = new clients();
+    my_clients = new Clients();
     my_clients->show();
     this->hide();
     Server server(limit.toInt(), n_abonent.toInt());
