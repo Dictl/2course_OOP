@@ -14,6 +14,7 @@ Server::Server(int k, int n) : QObject(){
 Server::~Server(){
     delete comm;
     delete freeIDs;
+    delete takenIDs;
 }
 void Server::handleMessage(QString &message){
     std::stringstream rReqSs; // recieved request stringstream
@@ -25,14 +26,16 @@ void Server::handleMessage(QString &message){
     qDebug() << "Recieved:";
     switch (requestType) {
 
-        case 0: // Zero means a creation request, and it will assign an ID
+        case 0:{ // Zero means a creation request, and it will assign an ID
             resSs << "0 ";
-            resSs << freeIDs->back();
+            int indexx = rand()%freeIDs->size();
+            resSs << QString::number(freeIDs->at(indexx)).toStdString();
             comm->sendToAddress(QString::fromStdString(resSs.str()), NETWORK_IP, NEW_CLIENT_PORT);
-            qDebug() << "0: Abonent creation request. Assigned ID:" << freeIDs->back();
-            freeIDs->pop_back();
+            qDebug() << "0: Abonent creation request. Assigned ID:" << QString::number(freeIDs->at(indexx)).toStdString();
+            takenIDs->push_back(freeIDs->at(indexx));
+            freeIDs->erase(std::remove(freeIDs->begin(), freeIDs->end(), freeIDs->at(indexx)), freeIDs->end());
             return;
-        break;
+        break;}
 
         case 1:{ // One means that abonent asks if the limit is reached
             quint16 requestee;
@@ -111,6 +114,13 @@ void Server::handleMessage(QString &message){
             connections.erase(connections.begin() + index);
             currentConnections--;
             return;
+        break;}
+
+        case 7:{ // Seven is reserved for abonent deletion and their number recovery
+            quint16 abonent;
+            rReqSs >> abonent;
+            takenIDs->erase(std::remove(takenIDs->begin(), takenIDs->end(), abonent), takenIDs->end());
+            freeIDs->push_back(abonent);
         break;}
     }
 }
