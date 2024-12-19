@@ -2,6 +2,8 @@
 #define CLIENT_H
 #include <QCloseEvent>
 #include <QWidget>
+#include "server.h"
+#include <QStringListModel>
 namespace Ui {
 class Clients;
 }
@@ -13,18 +15,15 @@ class Clients : public QWidget
 public:
     explicit Clients(QWidget *parent = nullptr);
     ~Clients();
-
-private slots:
-    void on_pushButton_clicked();
-
 signals:
     void clDestroyed();
-
 protected:
     void closeEvent(QCloseEvent *event) override;
-
 private:
     Ui::Clients *ui;
+    QStringListModel *model;
+public slots:
+    void newDataRecieved(QVector<std::pair<quint16, int>> v, QVector<std::pair<quint16, quint16>> c);
 };
 
 #endif // CLIENT_H

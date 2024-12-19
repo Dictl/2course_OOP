@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>client</class>
+ <class>Clients</class>
  <widget class="QWidget" name="client">
   <property name="geometry">
    <rect>
@@ -22,7 +22,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QListView" name="list_clients"/>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QListView" name="list_clients"/>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

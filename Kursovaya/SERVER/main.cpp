@@ -1,5 +1,4 @@
 #include "interface.h"
-#include <sstream>
 
 int main(int argc, char *argv[])
 {
@@ -7,6 +6,4 @@ int main(int argc, char *argv[])
     MainWindow w(argc, argv);
     w.show();
     return a.exec();
-
-
 }

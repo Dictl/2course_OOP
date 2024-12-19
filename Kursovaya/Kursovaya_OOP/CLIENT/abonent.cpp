@@ -27,6 +27,7 @@ void Abonent::handleMessage(QString &message) {
         comm = new Communicator(QHostAddress(NETWORK_IP), id); // in with the new assigned port
         connect(comm, &Communicator::messageRecieved, this, &Abonent::handleMessage);
         itfMesSs << "New Abonent created at port: " << id;
+        qDebug() << "I was born at port"<< id;
         idNumber = id;
         status = 0;
     break; // so a new abonent is born under a "phone number" which is just 5 digit port

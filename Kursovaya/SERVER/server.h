@@ -15,13 +15,17 @@ public:
     Server(int k, int n);
     ~Server();
 private:
-    int maximumConnections, currentConnections;
+    int maximumConnections, currentConnections, maximumAbonents, currentAbonents = 0;
     Communicator *comm;
-    std::vector<quint16> *freeIDs;
-    std::vector<std::pair<quint16, quint16>> connections;
+    QVector<quint16> *freeIDs;
+    QVector<std::pair<quint16, int>> *takenIDs;
+    QVector<std::pair<quint16, quint16>> connections;
 
 public slots:
     void handleMessage(QString &message);
+signals:
+    void messageNotice(QVector<std::pair<quint16, int>>, QVector<std::pair<quint16, quint16>>);
 };
-int indexFind(std::vector<std::pair<quint16, quint16>> v, int key);
+int indexFind(QVector<std::pair<quint16, quint16>> v, int key);
+void updateValue(QVector<std::pair<quint16, int>>& takenIDs, quint16 searchKey, int newValue);
 #endif // SERVER_H

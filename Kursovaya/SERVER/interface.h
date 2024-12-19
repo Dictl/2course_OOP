@@ -1,10 +1,8 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
-#include "server.h"
 #include <QMainWindow>
 #include <QUdpSocket>
 #include <sstream>
-//#include "abonent.h"
 
 #include "client.h"
 QT_BEGIN_NAMESPACE
@@ -29,6 +27,7 @@ private slots:
 
     void on_pushButton1_clicked();
 private:
+    Server *server;
     int _argc;
     Clients *my_clients;
     Ui::MainWindow *ui;
