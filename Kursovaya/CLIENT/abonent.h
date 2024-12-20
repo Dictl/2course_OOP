@@ -13,8 +13,10 @@ class Abonent : public QObject
 public:
     Abonent();
     void sendToServer(QString &message);
+    quint16 getNumber();
 private:
     Communicator *comm;
+
     quint16 idNumber;
     short status = 1;
 public slots:

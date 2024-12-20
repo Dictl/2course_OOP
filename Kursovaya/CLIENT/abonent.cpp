@@ -29,6 +29,7 @@ void Abonent::handleMessage(QString &message) {
         itfMesSs << "New Abonent created at port: " << id;
         idNumber = id;
         status = 0;
+        qDebug()<<"in case 0"<<idNumber<<"/n"<<id<<"/nend/n";
     break; // so a new abonent is born under a "phone number" which is just 5 digit port
 
     case 1: // abonent asked for ATS status (is connection limit reached?) and recieved an answer
@@ -77,4 +78,8 @@ void Abonent::handleMessage(QString &message) {
     }
     QString toInterface = QString::fromStdString(itfMesSs.str());
     emit transferToInteface(toInterface);
+}
+
+quint16 Abonent::getNumber(){
+    return idNumber;
 }
