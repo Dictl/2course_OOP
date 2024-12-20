@@ -12,13 +12,20 @@ class Abonent : public QObject
     Q_OBJECT
 public:
     Abonent();
-    void sendToServer(QString &message);
+    ~Abonent();
     quint16 getNumber();
+    short getStatus();
+    void call(quint16 number);
+    void answer(quint16 who);
+    void hangUp(quint16 who);
+    void pickUp();
+    void sendMessage(QString message);
+    void setStatus(short status_);
 private:
+    void sendToServer(QString &message);
     Communicator *comm;
-
     quint16 idNumber;
-    short status = 1;
+    short status;
 public slots:
     void handleMessage(QString &message);
 signals:

@@ -7,6 +7,12 @@ Abonent::Abonent() {
     qDebug() << "Creation request have been sent. Processing...";
 }
 
+Abonent::~Abonent()
+{
+    QString destruction = QString("7 "+QString::number(idNumber));
+    sendToServer(destruction);
+}
+
 void Abonent::sendToServer(QString &message)
 {
     comm->sendToAddress(message, NETWORK_IP, SERVER_PORT);
@@ -26,10 +32,9 @@ void Abonent::handleMessage(QString &message) {
         rReqSs >> id;
         comm = new Communicator(QHostAddress(NETWORK_IP), id); // in with the new assigned port
         connect(comm, &Communicator::messageRecieved, this, &Abonent::handleMessage);
-        itfMesSs << "New Abonent created at port: " << id;
         idNumber = id;
         status = 0;
-        qDebug()<<"in case 0"<<idNumber<<"/n"<<id<<"/nend/n";
+        itfMesSs << "0" << " ";
     break; // so a new abonent is born under a "phone number" which is just 5 digit port
 
     case 1: // abonent asked for ATS status (is connection limit reached?) and recieved an answer
@@ -76,10 +81,52 @@ void Abonent::handleMessage(QString &message) {
     break;
 
     }
-    QString toInterface = QString::fromStdString(itfMesSs.str());
-    emit transferToInteface(toInterface);
+    emit transferToInteface(message);
 }
 
 quint16 Abonent::getNumber(){
     return idNumber;
+}
+
+short Abonent::getStatus() {
+    return status;
+}
+
+void Abonent::call(quint16 number) {
+    QString textToTransfer = "2 " + QString::number(idNumber) + " " + QString::number(number);
+    sendToServer(textToTransfer);
+    status = 3;
+}
+
+void Abonent::answer(quint16 who) {
+    QString textToTransfer = "3 " + QString::number(idNumber) + " " + QString::number(who) + " 1";
+    sendToServer(textToTransfer);
+}
+
+void Abonent::hangUp(quint16 who) {
+    QString textToTransfer;
+    switch(status)
+    case 3:{
+        textToTransfer = "3 " + QString::number(idNumber) + " " + QString::number(who) + " 0";
+        break;
+    case 4:
+        textToTransfer = "6 " + QString::number(idNumber);
+        break;
+    }
+    sendToServer(textToTransfer);
+    status = 0;
+}
+
+void Abonent::pickUp() {
+    QString message = QString("1 " + QString::number(idNumber));
+    sendToServer(message);
+}
+
+void Abonent::sendMessage(QString message)
+{
+    sendToServer(message);
+}
+
+void Abonent::setStatus(short status_) {
+    status = status_;
 }

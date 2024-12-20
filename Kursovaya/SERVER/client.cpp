@@ -17,16 +17,16 @@ void Clients::closeEvent(QCloseEvent *event){
     emit clDestroyed();
     event->accept();
 }
-void Clients::newDataRecieved(QVector<std::pair<quint16, int>> v, QVector<std::pair<quint16, quint16>> c) {
+void Clients::newDataRecieved(QVector<std::pair<quint16, int>> v, QVector<std::pair<quint16, quint16>> c, int maxAb, int maxCon){
     QStringList list;
+    list << QString("Connected abonents (" + QString::number(v.size()) + "/"+QString::number(maxAb)+"):");
     if (v.size() != 0){
-        list << QString("Connected abonents (" + QString::number(v.size()) + "):");
         for (std::pair<quint16, int> pair : v){
             list << QString("Number: " + QString::number(pair.first) + " Status: " + QString::number(pair.second));
         }
-    }
+    };
+    list << QString("Current calls (" + QString::number(c.size()) + "/"+QString::number(maxCon)+ "):");
     if (c.size() != 0){
-        list << QString("Current calls (" + QString::number(c.size()) + "):");
         for (std::pair<quint16, quint16> pair : c){
             list << QString("{" + QString::number(pair.first) + "," + QString::number(pair.second) + "}");
         }
