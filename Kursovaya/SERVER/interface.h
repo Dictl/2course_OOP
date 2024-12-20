@@ -2,9 +2,8 @@
 #define INTERFACE_H
 #include <QMainWindow>
 #include <QUdpSocket>
-#include <sstream>
-
 #include "client.h"
+#include "server.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;

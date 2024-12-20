@@ -1,9 +1,8 @@
 #ifndef CLIENT_H
 #define CLIENT_H
-
 #include <QWidget>
 #include "abonent.h"
-#include "QTime"
+#include <QTime>
 
 namespace Ui {
 class client;
@@ -18,7 +17,6 @@ public:
     ~client();
 public slots:
     void dataIn(QString s);
-    void dataOut(QString s);
 private slots:
     void on_checkATS_clicked();
 

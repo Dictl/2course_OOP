@@ -1,6 +1,7 @@
 #include "client.h"
 #include "ui_client.h"
-
+#include <sstream>
+#include <regex>
 
 
 client::client(QWidget *parent)
@@ -8,7 +9,7 @@ client::client(QWidget *parent)
     , ui(new Ui::client)
 {
     me= new Abonent();
-    connect(me,&Abonent::transferToInteface,this,&client::dataOut);
+
     connect(me,&Abonent::transferToInteface,this,&client::dataIn);
     ui->setupUi(this);
     ui->result->setEnabled(false);
@@ -131,10 +132,6 @@ void client::dataIn(QString s)
     cursor.movePosition(QTextCursor::End);
     ui->message->setTextCursor(cursor);
 }
-void client::dataOut(QString s){
-    qDebug()<<s;
-}
-
 void client::on_checkATS_clicked()
 {
     me->pickUp();
@@ -213,7 +210,6 @@ void client::on_call__clicked() {
 
     case 3:{
         ui->result->setText(QString("Not ready"));
-        ui->message->insertPlainText("\nCall is rejected or aborted");
         ui->result->setStyleSheet("QLineEdit {background-color: white;}");
         ui->call->setEnabled(false);
         ui->call_->setEnabled(false);

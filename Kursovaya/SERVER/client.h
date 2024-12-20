@@ -2,7 +2,6 @@
 #define CLIENT_H
 #include <QCloseEvent>
 #include <QWidget>
-#include "server.h"
 #include <QStringListModel>
 namespace Ui {
 class Clients;

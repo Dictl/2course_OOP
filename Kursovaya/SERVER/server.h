@@ -1,6 +1,5 @@
 #ifndef SERVER_H
 #define SERVER_H
-#include "QApplication"
 #include <sstream>
 #include <communicator.h>
 #include <bits/stdc++.h>

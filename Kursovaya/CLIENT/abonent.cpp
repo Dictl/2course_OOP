@@ -1,4 +1,6 @@
 #include "abonent.h"
+#include <sstream>
+#include <regex>
 
 Abonent::Abonent() {
     comm = new Communicator(QHostAddress(NETWORK_IP), 1);

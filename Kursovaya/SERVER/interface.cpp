@@ -1,15 +1,12 @@
 #include "interface.h"
 #include "ui_interface.h"
 #include <QButtonGroup>
-#include <sstream>
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 #include <QIntValidator>
-#include "server.h"
 
 
 using namespace std;
-stringstream req_ss, res_ss; //request and response stringstream
 QString limit, n_abonent;
 
 
