@@ -15,12 +15,13 @@ Function<T>::Function(int accuracy, Array<T> derivatives) : Function() {
     } // I HAVE TO REVERSE IT PLEASE SEND HELP T_T
 
     int j;
-    if (derivatives_2.get_numbers()[0] == 0 || accuracy % 2 == 1) {
-        j = accuracy;
-    }  // depending on accuracy first coefficient might or might not be a zero.
-    else{
+    if (derivatives.get_numbers()[0] == 0){
         j = accuracy-1;
     }
+    else{
+        j = accuracy;
+    }
+
 
 
     this->coefficients = new Array<T>(derivatives.get_size());
