@@ -34,7 +34,7 @@ template<typename T>
 Function<T>::~Function(){}
 template class Function<double>;
 template class Function<TComplex>;
-int factorial(int i) {
+long long int factorial(long long int i) {
     if (i==0) return 1;
     else return i*factorial(i-1);
 }

@@ -13,4 +13,4 @@ public:
 
 #endif // FUNCTION_H
 
-int factorial(int i);
+long long int factorial(long long int i);

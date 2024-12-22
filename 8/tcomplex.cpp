@@ -91,6 +91,12 @@ TComplex TComplex::operator/(const double tdouble) const{
 TComplex TComplex::operator/(const int tint) const{
     return TComplex(real/tint, imaginary/tint);
 }
+TComplex TComplex::operator/(const long int tlint) const{
+    return TComplex(real/tlint, imaginary/tlint);
+}
+TComplex TComplex::operator/(const long long int tllint) const{
+    return TComplex(real/tllint, imaginary/tllint);
+}
 TComplex TComplex::operator/(const TComplex& tcomplex) const{
     return TComplex(
 

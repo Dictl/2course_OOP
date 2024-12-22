@@ -24,6 +24,8 @@ public:
     TComplex operator*(const TComplex& tcomplex) const;
     TComplex operator/(const double tdouble) const;
     TComplex operator/(const int tint) const;
+    TComplex operator/(const long int tlint) const;
+    TComplex operator/(const long long int tllint) const;
     TComplex operator/(const TComplex& tcomplex) const;
     double get_real() const;
     double get_image() const;

@@ -36,7 +36,7 @@ void MainWindow::on_pushButton_clicked()
     if(ui->sin_->isChecked()){
         degree=ui->degree_->text();
         point=ui->point_->text();
-        Sine<TComplex> sine_object(degree.toInt());
+        Sine<TComplex> sine_object(degree.toInt()*2);
         ss<<point.toStdString();
         TComplex ar;
         ss>>ar;
@@ -76,7 +76,7 @@ void MainWindow::on_pushButton_clicked()
     if(ui->si_->isChecked()){
         degree=ui->degree_->text();
         point=ui->point_->text();
-        SineIntegral<TComplex> sineIntegral_object(degree.toInt());
+        SineIntegral<TComplex> sineIntegral_object(degree.toInt()*2);
         ss<<point.toStdString();
         TComplex ar;
         ss>>ar;
