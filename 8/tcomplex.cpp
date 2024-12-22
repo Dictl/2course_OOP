@@ -83,7 +83,7 @@ TComplex TComplex::operator*(const int tint) const{
 }
 TComplex TComplex::operator*(const TComplex& tcomplex) const{
     return TComplex((real*tcomplex.real-imaginary*
-    tcomplex.imaginary), (real*tcomplex.imaginary+imaginary*tcomplex.real));
+                                                tcomplex.imaginary), (real*tcomplex.imaginary+imaginary*tcomplex.real));
 }
 TComplex TComplex::operator/(const double tdouble) const{
     return TComplex(real/tdouble, imaginary/tdouble);
@@ -100,15 +100,15 @@ TComplex TComplex::operator/(const long long int tllint) const{
 TComplex TComplex::operator/(const TComplex& tcomplex) const{
     return TComplex(
 
-        (this->real*tcomplex.real+this->imaginary*tcomplex.imaginary)
-                                    /                                // real part
-        (pow(tcomplex.real,2)+pow(tcomplex.imaginary,2))
+            (this->real*tcomplex.real+this->imaginary*tcomplex.imaginary)
+            /                                // real part
+            (pow(tcomplex.real,2)+pow(tcomplex.imaginary,2))
 
         ,
 
         (this->imaginary*tcomplex.real-this->real*tcomplex.imaginary)
-                                    /                                // imaginary part
-        (pow(tcomplex.real,2)+pow(tcomplex.imaginary,2))
+            /                                // imaginary part
+            (pow(tcomplex.real,2)+pow(tcomplex.imaginary,2))
 
         );
 }
@@ -124,7 +124,7 @@ double TComplex::magnitude() const{
 TComplex TComplex::sqrt_t() const{
     if (imaginary != 0) {
         return TComplex(sqrt((sqrt(real*real + imaginary*imaginary) + real)/2),
-        imaginary/fabs(imaginary)*sqrt((sqrt(real*real + imaginary*imaginary) - real)/2));
+                        imaginary/fabs(imaginary)*sqrt((sqrt(real*real + imaginary*imaginary) - real)/2));
     }
     else{
         return TComplex(sqrt(real),0);

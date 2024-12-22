@@ -6,7 +6,7 @@
 #include <QRegularExpressionValidator>
 #include <QIntValidator>
 
-QString degree, point;
+QString degree, point, from, before;
 
 Array<TComplex> arr_object;
 
@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
     QIntValidator *les = new QIntValidator(0,100000,0);
     ui->degree_->setValidator(les);
     ui->sin_->setChecked(true);
+    //ui->from_->setValidator(les);
+    //ui->before_->setValidator(les);
 
 }
 
@@ -36,6 +38,8 @@ void MainWindow::on_pushButton_clicked()
     if(ui->sin_->isChecked()){
         degree=ui->degree_->text();
         point=ui->point_->text();
+        from=ui->from_->text();
+        before=ui->before_->text();
         Sine<TComplex> sine_object(degree.toInt()*2);
         ss<<point.toStdString();
         TComplex ar;
@@ -47,35 +51,14 @@ void MainWindow::on_pushButton_clicked()
         ui->result_->setText(QString::fromStdString(t));
         qDebug()<<t;
 
-        showDrawingWindow(degree.toInt(), 0);
-
-        /*QPainter painter(this);
-
-        painter.setPen(Qt::blue);
-        double x1=0, y1, x2, y2;
-        std::stringstream ss_;
-        ar = double(0);
-        ss_<<sine_object.solve_for_x(ar);
-        ss_>>t;
-        y1=std::stoi(t);
-
-
-        for(double i=0.001; i<50; i+=0.001){
-            std::stringstream ss_;
-            ar = double(i);
-            ss_<<sine_object.solve_for_x(ar);
-            std::string t;
-            ss_>>t;
-            y2=std::stoi(t);
-            painter.drawLine(x1,y1,i,y2);
-            x1=x2;
-            y1=y2;
-        }*/
+        showDrawingWindow(degree.toInt(), 0, from.toInt(), before.toInt());
     }
 
     if(ui->si_->isChecked()){
         degree=ui->degree_->text();
         point=ui->point_->text();
+        from=ui->from_->text();
+        before=ui->before_->text();
         SineIntegral<TComplex> sineIntegral_object(degree.toInt()*2);
         ss<<point.toStdString();
         TComplex ar;
@@ -86,13 +69,13 @@ void MainWindow::on_pushButton_clicked()
         ui->result_->setText(QString::fromStdString(t));
 
         qDebug()<<t;
-        showDrawingWindow(degree.toInt(), 1);
+        showDrawingWindow(degree.toInt(), 1, from.toInt(), before.toInt());
 
     }
 }
 
-void  MainWindow ::showDrawingWindow(int deg,bool s) {
-    DrawingWindow *drawingWindow = new DrawingWindow(deg, s);
+void  MainWindow ::showDrawingWindow(int deg,bool s, int f, int b) {
+    DrawingWindow *drawingWindow = new DrawingWindow(deg, s, f, b );
     drawingWindow->show();
 }
 
