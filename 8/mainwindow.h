@@ -19,7 +19,7 @@ public:
     DrawingWindow(int deg_, bool s_ , QWidget *parent = nullptr) : QWidget(parent) {
         deg = deg_;
         s = s_;
-        setFixedSize(400,400);
+        setFixedSize(800,800);
     }
 
 protected:
@@ -41,16 +41,15 @@ protected:
         ss_>>t;
         y1=std::stoi(t);
 
-
-          for(double i=0.001; i<50; i+=0.001){
-            if(y1>400){break;}
+          for(double i=0.001; i<400; i+=0.001){
+            //if(y1>400){break;}
             std::stringstream ss_;
             ar = double(i);
             ss_<<sine_object.solve_for_x(ar);
             std::string t;
             ss_>>t;
             y2=std::stoi(t);
-            painter.drawLine(x1+200,-y1+350,i+200,-y2+350);
+           painter.drawLine(x1+200,-y1+350,i+200,-y2+350);
             x1=i;
             y1=y2;
            }
@@ -72,7 +71,7 @@ protected:
             y1=std::stoi(t);
 
 
-            for(double i=0.001; i<50; i+=0.001){
+            for(double i=0.001; i<400; i+=0.001){
 
                 std::stringstream ss_;
                 ar = double(i);
@@ -80,8 +79,8 @@ protected:
                 std::string t;
                 ss_>>t;
                 y2=std::stoi(t);
-                painter.drawLine(x1,y1,i,y2);
-                x1=x2;
+                painter.drawLine(x1+200,-y1+350,i+200,-y2+350);
+                x1=i;
                 y1=y2;
             }
 
