@@ -26,67 +26,26 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event) override {
-        std::stringstream iss;
-        std::stringstream ss;
-        if(s==0){
-            QPainter painter(this);
-            Sine<TComplex> sine_object(deg*2);
-            TComplex ar;
-        ss>>ar;
-        std::string t;
-        iss>>t;
+        QPainter painter(this);
+        Function<TComplex>* object = nullptr;
+        if (s==0) object = new Sine<TComplex>(deg*2);
+        else object = new SineIntegral<TComplex>(deg*2);
+        TComplex ar;
         painter.setPen(Qt::blue);
         double x1=f, y1, x2=f, y2;
         std::stringstream ss_;
-        ar = double(x1);
-        ss_<<sine_object.solve_for_x(ar);
-        ss_>>t;
-        y1=std::stoi(t);
+        ar = TComplex(0);
+        y1 = (object->solve_for_x(ar)).get_real();
         double scale = 800 / (b - f);
-        while(x1<b){
+        while(x1<b) {
             x2+=0.1;
-            std::stringstream ss_;
-            ar = double(x2);
-            ss_<<sine_object.solve_for_x(ar);
-            std::string t;
-            ss_>>t;
-            y2=std::stoi(t);
+            ar = TComplex(x2);
+            y2 = (object->solve_for_x(ar)).get_real();
             painter.drawPoint(((x1-f)*scale),(y1*scale+400));
-            //painter.drawLine(((x1-f)*scale),(y1*scale+400),((x2-f)*scale),(y2*scale+400));
             x1=x2;
             y1=y2;
         }
-
-        }else{
-            QPainter painter(this);
-            SineIntegral<TComplex> sineIntegral_object(deg*2);
-            TComplex ar;
-            ss>>ar;
-            std::string t;
-            iss>>t;
-            painter.setPen(Qt::blue);
-            double x1=f, y1, x2=f, y2;
-            std::stringstream ss_;
-            ar = double(0);
-            ss_<<sineIntegral_object.solve_for_x(ar);
-            ss_>>t;
-            y1=std::stoi(t);
-
-            while(x1<b){
-                x2+=0.001;
-                std::stringstream ss_;
-                ar = double(x2);
-                ss_<<sineIntegral_object.solve_for_x(ar);
-                std::string t;
-                ss_>>t;
-                y2=std::stoi(t);
-                painter.drawLine(x1-f,-y1+350,x2-f,-y2+350);
-                x1=x2;
-                y1=y2;
-            }
-
-        }
-
+        delete object;
     }
 
 private:
